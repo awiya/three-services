@@ -14,7 +14,7 @@ import java.util.List;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "T_ORDERS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
