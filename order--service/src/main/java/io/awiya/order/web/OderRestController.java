@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static java.lang.String.format;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/orders")
 public class OderRestController {
 
     private final OrderRepository orderRepository;
-    private final ProductItemRepository productItemRepository;
     private final CustomerRestClientService customerRestClientService;
     private final InventoryRestClientService inventoryRestClientService;
 
@@ -37,13 +38,15 @@ public class OderRestController {
     public Order getOrder(@PathVariable Long orderId){
 
         Order order=orderRepository.findById(orderId)
-                .orElseThrow(()->new OrderNotFoundException(String.format("[orderId: %s]This Order is not found")));
+                .orElseThrow(()->new OrderNotFoundException(format("[orderId: %s]This Order is not found",orderId)));
 
         Customer customer=customerRestClientService.getCustomerById(order.getCustomerId());
 
+
         order.setCustomer(customer);
 
-        order.getProductItems().forEach(prodItem->{
+        order.getProductItems()
+                .forEach(prodItem->{
             Product product=inventoryRestClientService.getProductById(prodItem.getProductId());
             prodItem.setProduct(product);
         });
