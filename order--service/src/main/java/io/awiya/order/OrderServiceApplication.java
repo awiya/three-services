@@ -12,6 +12,7 @@ import io.awiya.order.services.InventoryRestClientService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Date;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
+@EnableFeignClients
 public class OrderServiceApplication {
 
     public static void main(String[] args) {
@@ -34,13 +36,12 @@ public class OrderServiceApplication {
 
         return args -> {
 
-            List<Customer> customers = customerRestClientService.allCustomers().getContent().stream().toList();
-            List<Product> products = inventoryRestClientService.allProducts().getContent().stream().toList();
-
+            List<Customer> customers = customerRestClientService.allCustomers();
+            List<Product> products = inventoryRestClientService.allProducts();
             Long customerId = 1L;
             Random random = new Random();
 
-            Customer customer = customerRestClientService.customerById(customerId);
+            Customer customer = customerRestClientService.getCustomerById(customerId);
 
             for (int i = 0; i < 20; i++) {
                 Order order = Order.builder()
