@@ -6,7 +6,6 @@ import io.awiya.order.exception.OrderNotFoundException;
 import io.awiya.order.model.Customer;
 import io.awiya.order.model.Product;
 import io.awiya.order.repository.OrderRepository;
-import io.awiya.order.repository.ProductItemRepository;
 import io.awiya.order.services.CustomerRestClientService;
 import io.awiya.order.services.InventoryRestClientService;
 import lombok.RequiredArgsConstructor;
@@ -28,28 +27,26 @@ public class OderRestController {
     private final CustomerRestClientService customerRestClientService;
     private final InventoryRestClientService inventoryRestClientService;
 
-
     @GetMapping
-    public List<Order> allOrders(){
+    public List<Order> allOrders() {
         return orderRepository.findAll();
     }
 
     @GetMapping("/fullOrder/{orderId}")
-    public Order getOrder(@PathVariable Long orderId){
+    public Order getOrder(@PathVariable Long orderId) {
 
-        Order order=orderRepository.findById(orderId)
-                .orElseThrow(()->new OrderNotFoundException(format("[orderId: %s]This Order is not found",orderId)));
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(format("[orderId: %s]This Order is not found", orderId)));
 
-        Customer customer=customerRestClientService.getCustomerById(order.getCustomerId());
-
+        Customer customer = customerRestClientService.getCustomerById(order.getCustomerId());
 
         order.setCustomer(customer);
 
         order.getProductItems()
-                .forEach(prodItem->{
-            Product product=inventoryRestClientService.getProductById(prodItem.getProductId());
-            prodItem.setProduct(product);
-        });
+                .forEach(prodItem -> {
+                    Product product = inventoryRestClientService.getProductById(prodItem.getProductId());
+                    prodItem.setProduct(product);
+                });
         return order;
     }
 }
