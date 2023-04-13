@@ -1,11 +1,12 @@
-<div class="container">
+<div class="container  mt-3 popi">
     <table class="table" *ngIf="orders">
-        <thead>
+        <thead class="bg-dark text-white">
             <tr>
                 <th>ID</th>
                 <th>Date</th>
                 <th>Status</th>
                 <th>CustomerID</th>
+                <th></th>
 
             </tr>
         </thead>
@@ -17,7 +18,6 @@
                 <td>{{o.customerId}}</td>
                 <td>
                     <button class="btn btn-success" (click)="getOrderDetails(o)">Order details</button>
-
                 </td>
 
             </tr>

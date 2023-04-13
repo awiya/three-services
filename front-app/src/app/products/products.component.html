@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container popi">
     <table class="table" *ngIf="products">
         <thead>
-            <tr>
+            <tr class="bg-dark text-white">
                 <th>ID</th>
                 <th>Name</th>
                 <th>Price</th>
@@ -12,7 +12,7 @@
             <tr *ngFor="let p of products">
                 <td>{{p.id}}</td>
                 <td>{{p.name}}</td>
-                <td>{{p.price}}</td>
+                <td class="mono">{{p.price | number : '.2'}} MAD</td>
                 <td>{{p.quantity}}</td>
             </tr>
         </tbody>

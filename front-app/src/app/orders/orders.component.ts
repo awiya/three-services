@@ -30,7 +30,7 @@ export class OrdersComponent {
     }
 
     getOrderDetails(o: any){
-
+      this.router.navigateByUrl("/order-details/"+ o.id)
     }
 
 
