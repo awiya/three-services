@@ -14,6 +14,7 @@ import java.util.Map;
 public class ConsulConfigRestController {
 
     private final MyConsulConfig myConsulConfig;
+    private final MyVaultConfig myVaultConfig;
 
 
     @Value("${token.accessTokenTimeout}")
@@ -28,7 +29,12 @@ public class ConsulConfigRestController {
         return Map.of("accessTokenTimeout", accessTokenTimeout, "refreshTokenTimeout", refreshTokenTimeout);
     }
 
-    @GetMapping("/anotherMyConfig")
+    @GetMapping("/myConfig")
+    public Map<String,Object> myConfig(){
+        return Map.of("consulConfig",myConsulConfig, "vaultConfig",myVaultConfig);
+    }
+
+    @GetMapping("/anotherConsulConfig")
     public MyConsulConfig getMyConsulConfig() {
         return myConsulConfig;
     }
