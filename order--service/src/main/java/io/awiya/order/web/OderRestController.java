@@ -32,6 +32,11 @@ public class OderRestController {
         return orderRepository.findAll();
     }
 
+    @GetMapping("/byCustomerId/{customerId}")
+    public List<Order> getOrdersByCustomerId(@PathVariable Long customerId){
+        return orderRepository.findByCustomerId(customerId);
+    }
+
     @GetMapping("/fullOrder/{orderId}")
     public Order getOrder(@PathVariable Long orderId) {
 
